@@ -39,12 +39,6 @@ const Quests = () => {
     navigate(path);
   };
 
-  const calculateTotalRewards = () => {
-    return quests
-      .filter(quest => quest.completed)
-      .reduce((total, quest) => total + quest.reward, 0);
-  };
-
   // Get profile picture for navbar
   const getProfilePicture = () => {
     if (userData?.profile_picture) {
@@ -119,54 +113,9 @@ const Quests = () => {
             <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
           </svg>
           <span className="rewards-text_quests">
-            {calculateTotalRewards().toLocaleString()} Bonus Points Earned
+            0 Bonus Points Earned
           </span>
         </div>
-      </div>
-
-      {/* Quests Content */}
-      <div className="quests-content_quests">
-        {quests.map((quest, index) => (
-          <div 
-            key={quest.id} 
-            className={`quest-card_quests ${quest.completed ? 'completed' : ''}`}
-            style={{ animationDelay: `${index * 0.1}s` }}
-          >
-            <div className="quest-checkbox_quests">
-              {quest.completed && (
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
-                  <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
-              )}
-            </div>
-
-            <div className="quest-content_quests">
-              <div className="quest-header_quests">
-                <h3 className="quest-title_quests">{quest.title}</h3>
-                <div className="quest-reward_quests">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                  </svg>
-                  <span>+{quest.reward} pts</span>
-                </div>
-              </div>
-
-              <p className="quest-description_quests">{quest.description}</p>
-
-              <div className="quest-progress_quests">
-                <div className="progress-bar_quests">
-                  <div 
-                    className="progress-fill_quests"
-                    style={{ width: `${(quest.progress / quest.total) * 100}%` }}
-                  ></div>
-                </div>
-                <span className="progress-text_quests">
-                  {quest.progress}/{quest.total}
-                </span>
-              </div>
-            </div>
-          </div>
-        ))}
       </div>
 
       {/* Info Footer */}

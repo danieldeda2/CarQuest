@@ -1095,7 +1095,7 @@ const Capture = () => {
   const [lastImageHash, setLastImageHash] = useState(null); // Track last image to prevent duplicates
 
   // 🚀 PRODUCTION API Configuration
-  const ML_API_URL = 'http://165.227.180.39:8000';
+  const ML_API_URL = 'https://ml.carquest.io';
   const BACKEND_API_URL = 'https://api.carquest.io';
 
   let navigate = useNavigate();

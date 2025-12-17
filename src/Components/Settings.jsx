@@ -17,7 +17,7 @@ const Settings = () => {
   const [toast, setToast] = useState({ show: false, message: '', type: '' });
 
   // 🚀 PRODUCTION API
-  const BACKEND_API_URL = 'http://165.227.180.39:8002';
+  const BACKEND_API_URL = 'https://api.carquest.io';
 
   let navigate = useNavigate();
 

@@ -55,7 +55,7 @@ const CreateAccount = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('http://165.227.180.39:8002/signup', {
+      const response = await fetch('https://api.carquest.io/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

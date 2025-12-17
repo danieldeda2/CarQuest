@@ -19,7 +19,7 @@ const Support = () => {
   let navigate = useNavigate();
   let location = useLocation();
 
-  const BACKEND_API_URL = 'http://165.227.180.39:8002';
+  const BACKEND_API_URL = 'https://api.carquest.io';
 
   // Car data for mapping car_id to make/model
   const carData = {

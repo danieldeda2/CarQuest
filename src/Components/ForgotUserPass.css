@@ -1,0 +1,978 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body, html {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  position: fixed;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.container_forgot_userPass {
+  height: 100vh;
+  height: 100dvh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fc7132;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 20px;
+}
+
+/* Animated Background Gradients */
+.bg-gradient-1_forgot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at 30% 35%, rgba(166, 46, 251, 0.3) 0%, transparent 50%);
+  animation: moveGradient1 20s ease-in-out infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bg-gradient-2_forgot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at 70% 70%, rgba(251, 191, 36, 0.25) 0%, transparent 50%);
+  animation: moveGradient2 15s ease-in-out infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@keyframes moveGradient1 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  25% {
+    transform: translate(-10%, 5%) scale(1.1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(-5%, -10%) scale(1.05);
+    opacity: 1;
+  }
+  75% {
+    transform: translate(5%, -5%) scale(1.15);
+    opacity: 0.9;
+  }
+}
+
+@keyframes moveGradient2 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  33% {
+    transform: translate(10%, -5%) scale(1.1);
+    opacity: 0.85;
+  }
+  66% {
+    transform: translate(-5%, 10%) scale(1.08);
+    opacity: 0.95;
+  }
+}
+
+/* Floating Particles */
+.particles_forgot {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.particle_forgot {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  animation: float 8s ease-in-out infinite;
+}
+
+.particle_forgot:nth-child(1) {
+  top: 20%;
+  left: 20%;
+  animation-delay: 0s;
+  animation-duration: 8s;
+}
+
+.particle_forgot:nth-child(2) {
+  top: 60%;
+  left: 80%;
+  animation-delay: 2s;
+  animation-duration: 10s;
+}
+
+.particle_forgot:nth-child(3) {
+  top: 80%;
+  left: 30%;
+  animation-delay: 4s;
+  animation-duration: 12s;
+}
+
+.particle_forgot:nth-child(4) {
+  top: 40%;
+  left: 70%;
+  animation-delay: 1s;
+  animation-duration: 9s;
+}
+
+.particle_forgot:nth-child(5) {
+  top: 70%;
+  left: 50%;
+  animation-delay: 3s;
+  animation-duration: 11s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  10% { opacity: 1; }
+  50% {
+    transform: translateY(-30px) translateX(20px);
+    opacity: 0.8;
+  }
+  90% { opacity: 1; }
+}
+
+/* ===== EPIC VIDEO GAME NOTIFICATION SYSTEM ===== */
+.game-notification-overlay_forgot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: overlayFadeIn_forgot 0.3s ease-out;
+  padding: 20px;
+}
+
+@keyframes overlayFadeIn_forgot {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.game-notification_forgot {
+  background: linear-gradient(135deg, rgba(166, 46, 251, 0.95) 0%, rgba(252, 113, 50, 0.95) 100%);
+  border: 3px solid rgba(251, 191, 36, 0.8);
+  border-radius: 20px;
+  padding: 40px 35px;
+  max-width: 450px;
+  width: 100%;
+  box-shadow: 0 0 60px rgba(166, 46, 251, 0.8),
+              0 0 120px rgba(251, 191, 36, 0.6),
+              inset 0 0 30px rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+  animation: notificationSlideIn_forgot 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+@keyframes notificationSlideIn_forgot {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Pulsing glow effect behind the notification */
+.notification-glow_forgot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.4) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  animation: pulseGlow_forgot 2s ease-in-out infinite;
+  z-index: -1;
+}
+
+@keyframes pulseGlow_forgot {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 1;
+  }
+}
+
+/* Icon with epic animations */
+.notification-icon_forgot {
+  width: 80px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 3px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 30px rgba(251, 191, 36, 0.8),
+              inset 0 0 20px rgba(255, 255, 255, 0.2);
+  animation: iconBounce_forgot 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s both,
+             iconGlow_forgot 2s ease-in-out infinite 1s;
+}
+
+.notification-icon_forgot svg {
+  color: white;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
+  animation: iconRotate_forgot 0.6s ease-out 0.5s both;
+}
+
+@keyframes iconBounce_forgot {
+  0% {
+    transform: scale(0) rotate(-180deg);
+  }
+  60% {
+    transform: scale(1.2) rotate(10deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes iconRotate_forgot {
+  from {
+    transform: rotate(-360deg) scale(0);
+  }
+  to {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+@keyframes iconGlow_forgot {
+  0%, 100% {
+    box-shadow: 0 0 30px rgba(251, 191, 36, 0.8),
+                inset 0 0 20px rgba(255, 255, 255, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 50px rgba(251, 191, 36, 1),
+                inset 0 0 30px rgba(255, 255, 255, 0.4);
+  }
+}
+
+/* Title with glitch effect */
+.notification-title_forgot {
+  color: white;
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-shadow: 0 0 20px rgba(251, 191, 36, 1),
+               0 0 40px rgba(166, 46, 251, 0.8),
+               3px 3px 0 rgba(251, 191, 36, 0.3),
+               -3px -3px 0 rgba(166, 46, 251, 0.3);
+  animation: titleGlitch_forgot 0.5s ease-out 0.6s both,
+             titlePulse_forgot 2s ease-in-out infinite 1.2s;
+  position: relative;
+}
+
+@keyframes titleGlitch_forgot {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px);
+    filter: blur(10px);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes titlePulse_forgot {
+  0%, 100% {
+    text-shadow: 0 0 20px rgba(251, 191, 36, 1),
+                 0 0 40px rgba(166, 46, 251, 0.8),
+                 3px 3px 0 rgba(251, 191, 36, 0.3),
+                 -3px -3px 0 rgba(166, 46, 251, 0.3);
+  }
+  50% {
+    text-shadow: 0 0 30px rgba(251, 191, 36, 1),
+                 0 0 60px rgba(166, 46, 251, 1),
+                 5px 5px 0 rgba(251, 191, 36, 0.5),
+                 -5px -5px 0 rgba(166, 46, 251, 0.5);
+  }
+}
+
+/* Message text */
+.notification-message_forgot {
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.6;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5),
+               0 0 20px rgba(255, 255, 255, 0.3);
+  animation: messageFadeIn_forgot 0.5s ease-out 0.8s both;
+  max-width: 350px;
+}
+
+@keyframes messageFadeIn_forgot {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Epic progress bar */
+.notification-bar_forgot {
+  width: 100%;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+  animation: barFadeIn_forgot 0.5s ease-out 1s both;
+}
+
+@keyframes barFadeIn_forgot {
+  from {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+.notification-bar-fill_forgot {
+  height: 100%;
+  background: linear-gradient(90deg, 
+    #fbbf24 0%, 
+    #f59e0b 25%, 
+    #fbbf24 50%, 
+    #f59e0b 75%, 
+    #fbbf24 100%);
+  background-size: 200% 100%;
+  border-radius: 10px;
+  animation: barFill_forgot 4s linear forwards,
+             barShimmer_forgot 1.5s linear infinite;
+  box-shadow: 0 0 15px rgba(251, 191, 36, 0.8);
+}
+
+@keyframes barFill_forgot {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes barShimmer_forgot {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Forgot Card */
+.forgot-card_userPass {
+  width: 100%;
+  max-width: 380px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  padding: 35px 28px;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+  animation: fadeInScale 0.6s ease-out;
+  max-height: 90vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.forgot-card_userPass::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.logo_forgot_userPass {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3px;
+}
+
+.logo_forgot_userPass img {
+  width: 85px;
+  height: 85px;
+  cursor: pointer;
+  filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.3));
+  transition: transform 0.3s ease;
+  animation: floatLogo 3s ease-in-out infinite;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@keyframes floatLogo {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+.logo_forgot_userPass img:active {
+  transform: scale(0.95);
+}
+
+/* Title */
+.title_forgot_userPass {
+  color: white;
+  font-size: 22px;
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.subtitle_forgot_userPass {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  margin: 0 0 5px 0;
+  line-height: 1.3;
+}
+
+/* Input Group */
+.input-group_forgot_userPass {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-label_forgot_userPass {
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  line-height: 1;
+}
+
+.input-field_forgot_userPass {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  color: white;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.input-field_forgot_userPass::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.input-field_forgot_userPass:focus {
+  outline: none;
+  border-color: #a62efb;
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 6px 20px rgba(166, 46, 251, 0.3);
+}
+
+/* Send Buttons */
+.send-button_forgot_userPass {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 14px;
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.send-button_forgot_userPass.primary {
+  background: linear-gradient(135deg, #a62efb 0%, #8b1fd4 100%);
+  box-shadow: 0 10px 30px rgba(166, 46, 251, 0.4);
+}
+
+.send-button_forgot_userPass.secondary {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.button-icon_forgot {
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.send-button_forgot_userPass::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.send-button_forgot_userPass:active::before {
+  left: 100%;
+}
+
+.send-button_forgot_userPass:active {
+  transform: scale(0.98);
+}
+
+.send-button_forgot_userPass.primary:active {
+  box-shadow: 0 8px 25px rgba(166, 46, 251, 0.6);
+}
+
+.send-button_forgot_userPass.secondary:active {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Back to Login Link */
+.back-login-link_forgot_userPass {
+  text-align: center;
+  margin-top: 5px;
+}
+
+.back-login-link_forgot_userPass a {
+  color: #fbbf24;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  -webkit-tap-highlight-color: transparent;
+  line-height: 1;
+}
+
+.back-login-link_forgot_userPass a:active {
+  color: white;
+  text-shadow: 0 0 15px rgba(251, 191, 36, 0.6);
+}
+
+/* ===== RESPONSIVE ===== */
+
+/* Small phones */
+@media (max-width: 375px) {
+  .container_forgot_userPass {
+    padding: 15px;
+  }
+
+  .forgot-card_userPass {
+    padding: 30px 24px;
+    gap: 14px;
+    max-width: 100%;
+  }
+
+  .logo_forgot_userPass {
+    margin-bottom: 2px;
+  }
+
+  .logo_forgot_userPass img {
+    width: 75px;
+    height: 75px;
+  }
+
+  .title_forgot_userPass {
+    font-size: 20px;
+  }
+
+  .subtitle_forgot_userPass {
+    font-size: 12px;
+    margin-bottom: 3px;
+  }
+
+  .input-label_forgot_userPass {
+    font-size: 12px;
+  }
+
+  .input-field_forgot_userPass {
+    padding: 13px 15px;
+    font-size: 14px;
+  }
+
+  .send-button_forgot_userPass {
+    padding: 14px;
+    font-size: 14px;
+    gap: 7px;
+  }
+
+  .button-icon_forgot {
+    width: 16px;
+    height: 16px;
+  }
+
+  .back-login-link_forgot_userPass a {
+    font-size: 12px;
+  }
+
+  /* Notification responsive */
+  .game-notification_forgot {
+    padding: 30px 25px;
+    max-width: 90vw;
+  }
+
+  .notification-icon_forgot {
+    width: 65px;
+    height: 65px;
+  }
+
+  .notification-icon_forgot svg {
+    width: 45px;
+    height: 45px;
+  }
+
+  .notification-title_forgot {
+    font-size: 22px;
+    letter-spacing: 2px;
+  }
+
+  .notification-message_forgot {
+    font-size: 14px;
+  }
+
+  .notification-bar_forgot {
+    height: 6px;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 320px) {
+  .forgot-card_userPass {
+    padding: 25px 20px;
+    gap: 12px;
+  }
+
+  .logo_forgot_userPass img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .title_forgot_userPass {
+    font-size: 19px;
+  }
+
+  .input-field_forgot_userPass {
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+
+  .send-button_forgot_userPass {
+    padding: 13px;
+    font-size: 13px;
+  }
+
+  .game-notification_forgot {
+    padding: 25px 20px;
+  }
+
+  .notification-icon_forgot {
+    width: 60px;
+    height: 60px;
+  }
+
+  .notification-icon_forgot svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .notification-title_forgot {
+    font-size: 20px;
+  }
+
+  .notification-message_forgot {
+    font-size: 13px;
+  }
+}
+
+/* Larger phones */
+@media (min-height: 700px) and (max-height: 850px) {
+  .forgot-card_userPass {
+    max-width: 400px;
+    padding: 38px 30px;
+    gap: 18px;
+  }
+
+  .logo_forgot_userPass img {
+    width: 95px;
+    height: 95px;
+  }
+
+  .title_forgot_userPass {
+    font-size: 24px;
+  }
+
+  .subtitle_forgot_userPass {
+    font-size: 14px;
+  }
+
+  .input-field_forgot_userPass {
+    padding: 15px 17px;
+    font-size: 16px;
+  }
+
+  .send-button_forgot_userPass {
+    padding: 16px;
+    font-size: 16px;
+  }
+
+  .notification-icon_forgot {
+    width: 90px;
+    height: 90px;
+  }
+
+  .notification-icon_forgot svg {
+    width: 70px;
+    height: 70px;
+  }
+
+  .notification-title_forgot {
+    font-size: 30px;
+  }
+
+  .notification-message_forgot {
+    font-size: 17px;
+  }
+}
+
+/* Tablets and large screens */
+@media (min-height: 851px) {
+  .forgot-card_userPass {
+    max-width: 420px;
+    padding: 42px 35px;
+    gap: 20px;
+  }
+
+  .logo_forgot_userPass img {
+    width: 105px;
+    height: 105px;
+  }
+
+  .title_forgot_userPass {
+    font-size: 25px;
+  }
+
+  .subtitle_forgot_userPass {
+    font-size: 15px;
+  }
+
+  .input-label_forgot_userPass {
+    font-size: 14px;
+  }
+
+  .input-field_forgot_userPass {
+    padding: 16px 18px;
+    font-size: 17px;
+  }
+
+  .send-button_forgot_userPass {
+    padding: 17px;
+    font-size: 17px;
+  }
+
+  .back-login-link_forgot_userPass a {
+    font-size: 14px;
+  }
+
+  .notification-icon_forgot {
+    width: 95px;
+    height: 95px;
+  }
+
+  .notification-icon_forgot svg {
+    width: 75px;
+    height: 75px;
+  }
+
+  .notification-title_forgot {
+    font-size: 32px;
+  }
+
+  .notification-message_forgot {
+    font-size: 18px;
+  }
+
+  .notification-bar_forgot {
+    height: 10px;
+  }
+}
+
+/* Landscape mode */
+@media (orientation: landscape) and (max-height: 500px) {
+  .container_forgot_userPass {
+    padding: 15px;
+  }
+
+  .forgot-card_userPass {
+    max-width: 90vw;
+    padding: 20px 25px;
+    gap: 10px;
+    max-height: 85vh;
+  }
+
+  .logo_forgot_userPass {
+    margin-bottom: 1px;
+  }
+
+  .logo_forgot_userPass img {
+    width: 55px;
+    height: 55px;
+  }
+
+  .title_forgot_userPass {
+    font-size: 17px;
+  }
+
+  .subtitle_forgot_userPass {
+    font-size: 11px;
+    margin-bottom: 3px;
+  }
+
+  .input-group_forgot_userPass {
+    gap: 4px;
+  }
+
+  .input-label_forgot_userPass {
+    font-size: 11px;
+  }
+
+  .input-field_forgot_userPass {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .send-button_forgot_userPass {
+    padding: 11px;
+    font-size: 13px;
+    gap: 6px;
+  }
+
+  .button-icon_forgot {
+    width: 15px;
+    height: 15px;
+  }
+
+  .back-login-link_forgot_userPass {
+    margin-top: 3px;
+  }
+
+  .back-login-link_forgot_userPass a {
+    font-size: 11px;
+  }
+
+  .game-notification_forgot {
+    padding: 20px 22px;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  .notification-icon_forgot {
+    width: 50px;
+    height: 50px;
+  }
+
+  .notification-icon_forgot svg {
+    width: 35px;
+    height: 35px;
+  }
+
+  .notification-title_forgot {
+    font-size: 18px;
+    letter-spacing: 2px;
+  }
+
+  .notification-message_forgot {
+    font-size: 12px;
+  }
+
+  .notification-bar_forgot {
+    height: 5px;
+  }
+}

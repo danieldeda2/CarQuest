@@ -45,7 +45,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('https://165.227.180.39:8002/login', {
+      const response = await fetch('http://165.227.180.39:8002/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

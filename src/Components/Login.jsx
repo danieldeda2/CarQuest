@@ -128,7 +128,7 @@ const Login = () => {
           </div>
         )}
 
-        <a href="#" className="forgot-link_login" onClick={toForgotUserPass}>
+        <a href="#!" className="forgot-link_login" onClick={toForgotUserPass}>
           Forgot Username or Password?
         </a>
 
@@ -141,7 +141,7 @@ const Login = () => {
         </button>
 
         <div className="create-account-link_login">
-          Don't have an account? <a href="#" onClick={toCreateAccount}>Create Account</a>
+          Don't have an account? <a href="#!" onClick={toCreateAccount}>Create Account</a>
         </div>
       </div>
     </div>

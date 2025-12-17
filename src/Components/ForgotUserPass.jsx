@@ -106,7 +106,7 @@ const ForgotUserPass = () => {
         </button>
 
         <div className="back-login-link_forgot_userPass">
-          <a href="#" onClick={toLogin}>← Back to Login</a>
+          <a href="#!" onClick={toLogin}>← Back to Login</a>
         </div>
       </div>
     </div>

@@ -7,13 +7,6 @@ import ProfileIcon from '../Assets/Profile.png'
 const Quests = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [userData, setUserData] = useState(null);
-  const [quests, setQuests] = useState([
-    { id: 1, title: "Capture 5 different cars", description: "Find and photograph 5 unique vehicles", reward: 500, completed: false, progress: 2, total: 5 },
-    { id: 2, title: "Spot a luxury car", description: "Capture any Ferrari, Lamborghini, or Rolls-Royce", reward: 1000, completed: false, progress: 0, total: 1 },
-    { id: 3, title: "Daily login bonus", description: "Open the app today", reward: 100, completed: true, progress: 1, total: 1 },
-    { id: 4, title: "Visit 3 different locations", description: "Capture cars in 3 different areas", reward: 300, completed: false, progress: 1, total: 3 },
-    { id: 5, title: "Capture a rare model", description: "Find and photograph a car worth 5000+ points", reward: 800, completed: false, progress: 0, total: 1 }
-  ]);
 
   let navigate = useNavigate();
 
@@ -44,10 +37,6 @@ const Quests = () => {
   const toHome = () => {
     let path = '/mainPage';
     navigate(path);
-  };
-
-  const toggleQuestComplete = (questId) => {
-    // Disabled - do nothing
   };
 
   const calculateTotalRewards = () => {
@@ -112,7 +101,7 @@ const Quests = () => {
           <img src={getProfilePicture()} alt="Profile"/>
           {dropdownOpen && (
             <div className="dropdown_quests">
-              <a href="#" onClick={(e) => {
+              <a href="#!" onClick={(e) => {
                 e.preventDefault();
                 handleLogout();
               }}>Log Out</a>

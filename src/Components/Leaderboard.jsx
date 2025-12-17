@@ -115,12 +115,12 @@ const Leaderboard = () => {
           {dropdownOpen && (
             <div className="dropdown_leaderboard">
               {isLoggedIn ? (
-                <a href="#" onClick={(e) => {
+                <a href="#!" onClick={(e) => {
                   e.preventDefault();
                   handleLogout();
                 }}>Log Out</a>
               ) : (
-                <a href="#" onClick={(e) => {
+                <a href="#!" onClick={(e) => {
                   e.preventDefault();
                   handleLogin();
                 }}>Log In</a>

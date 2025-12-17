@@ -3,8 +3,6 @@ import React, { useRef, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import SmallLogo from '../Assets/CarQuestLogo.png'
 import ProfileIcon from '../Assets/Profile.png'
-import emailjs from '@emailjs/browser'
-
 
 // 🔥🔥🔥 ULTRA-ELITE IMAGE VALIDATION SYSTEM - 15 DETECTION LAYERS 🔥🔥🔥
 // THIS MAKES IT IMPOSSIBLE TO CHEAT - ONLY REAL CAMERA PHOTOS PASS
@@ -577,7 +575,6 @@ const analyzeChromaticAberration = (pixels, width, height) => {
     
     // Look for color channel misalignment at edges
     const rDiff = Math.abs(pixels[idx] - pixels[nextIdx]);
-    const gDiff = Math.abs(pixels[idx + 1] - pixels[nextIdx + 1]);
     const bDiff = Math.abs(pixels[idx + 2] - pixels[nextIdx + 2]);
     
     // Real lenses have slight RGB misalignment
@@ -2003,7 +2000,7 @@ const handleConfirmYes = async () => {
           <img src={getProfilePicture()} alt="Profile"/>
           {dropdownOpen && (
             <div className="dropdown_capture">
-              <a href="#" onClick={(e) => {
+              <a href="#!" onClick={(e) => {
                 e.preventDefault();
                 handleLogout();
               }}>Log Out</a>

@@ -293,7 +293,7 @@ const Settings = () => {
           <img src={getProfilePicture()} alt="Profile"/>
           {dropdownOpen && (
             <div className="dropdown_settings">
-              <a href="#" onClick={(e) => {
+              <a href="#!" onClick={(e) => {
                 e.preventDefault();
                 handleLogout();
               }}>Log Out</a>

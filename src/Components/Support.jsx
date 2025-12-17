@@ -279,7 +279,7 @@ const Support = () => {
           <img src={getProfilePicture()} alt="Profile"/>
           {dropdownOpen && (
             <div className="dropdown_support">
-              <a href="#" onClick={(e) => {
+	      <a href="#!" onClick={(e) => {
                 e.preventDefault();
                 handleLogout();
               }}>Log Out</a>

@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import SmallLogo from '../Assets/CarQuestLogo.png'
 import ProfileIcon from '../Assets/Profile.png'
 
-// 🔥🔥🔥 ULTRA-ELITE IMAGE VALIDATION SYSTEM - 15 DETECTION LAYERS 🔥🔥🔥
-// THIS MAKES IT IMPOSSIBLE TO CHEAT - ONLY REAL CAMERA PHOTOS PASS
+// 🔥 PRACTICAL ANTI-CHEAT - Detects AI images and screen photos only
+// Allows regular iPhone photos, blank photos, outdoor shots, etc.
 
 const validateImageAuthenticity = async (base64Image) => {
   return new Promise((resolve) => {
@@ -25,123 +25,47 @@ const validateImageAuthenticity = async (base64Image) => {
       let suspicionScore = 0;
       const reasons = [];
       
-      // ===== ORIGINAL 5 LAYERS =====
-      
-      // 1️⃣ CHECK FOR EXIF DATA (real photos have camera metadata)
-      const hasExif = checkExifData(base64Image);
-      if (!hasExif) {
-        suspicionScore += 30;
-        reasons.push('No camera metadata detected');
-      }
-      
-      // 2️⃣ DETECT MOIRÉ PATTERNS (photos of screens show interference)
+      // 1️⃣ DETECT MOIRÉ PATTERNS (photos of screens show interference)
       const moireScore = detectMoirePattern(pixels, canvas.width, canvas.height);
-      if (moireScore > 0.15) {
-        suspicionScore += 35;
-        reasons.push('Screen interference pattern detected');
-      }
-      
-      // 3️⃣ CHECK PIXEL UNIFORMITY (screenshots are too perfect)
-      const uniformityScore = checkPixelUniformity(pixels);
-      if (uniformityScore > 0.8) {
-        suspicionScore += 25;
-        reasons.push('Unnaturally uniform pixels');
-      }
-      
-      // 4️⃣ ANALYZE EDGE SHARPNESS (screen photos have digital edges)
-      const edgeScore = analyzeEdgeSharpness(pixels, canvas.width, canvas.height);
-      if (edgeScore > 0.7) {
-        suspicionScore += 20;
-        reasons.push('Digital edge artifacts detected');
-      }
-      
-      // 5️⃣ CHECK FOR RGB SUBPIXEL PATTERNS (screen photos show RGB grids)
-      const subpixelScore = detectSubpixelPattern(pixels, canvas.width);
-      if (subpixelScore > 0.2) {
-        suspicionScore += 25;
-        reasons.push('Screen subpixel pattern detected');
-      }
-      
-      // ===== 🔥 NEW ULTRA-ELITE LAYERS 🔥 =====
-      
-      // 6️⃣ DETECT SCREEN REFRESH RATE ARTIFACTS (screens have 60Hz flicker)
-      const refreshScore = detectRefreshArtifacts(pixels, canvas.width, canvas.height);
-      if (refreshScore > 0.25) {
-        suspicionScore += 30;
-        reasons.push('Screen refresh artifacts detected');
-      }
-      
-      // 7️⃣ CHECK FOR COMPRESSION ARTIFACTS (real photos have natural JPEG compression)
-      const compressionScore = analyzeCompressionArtifacts(pixels, canvas.width, canvas.height);
-      if (compressionScore < 0.3 || compressionScore > 0.9) {
-        suspicionScore += 25;
-        reasons.push('Abnormal compression pattern');
-      }
-      
-      // 8️⃣ ANALYZE COLOR HISTOGRAM (screenshots have unnatural color distribution)
-      const histogramScore = analyzeColorHistogram(pixels);
-      if (histogramScore > 0.75) {
-        suspicionScore += 20;
-        reasons.push('Unnatural color distribution');
-      }
-      
-      // 9️⃣ DETECT BACKLIGHT BLEED (screens have backlight uniformity issues)
-      const backlightScore = detectBacklightBleed(pixels, canvas.width, canvas.height);
-      if (backlightScore > 0.3) {
-        suspicionScore += 30;
-        reasons.push('Screen backlight bleed detected');
-      }
-      
-      // 🔟 CHECK FOR PIXEL GRID PATTERNS (screens have visible pixel grids)
-      const pixelGridScore = detectPixelGrid(pixels, canvas.width, canvas.height);
-      if (pixelGridScore > 0.2) {
-        suspicionScore += 35;
-        reasons.push('Pixel grid structure detected');
-      }
-      
-      // 1️⃣1️⃣ ANALYZE NOISE PATTERNS (real photos have sensor noise, screenshots don't)
-      const noiseScore = analyzeNoisePattern(pixels);
-      if (noiseScore < 0.15) {
-        suspicionScore += 30;
-        reasons.push('Missing natural camera noise');
-      }
-      
-      // 1️⃣2️⃣ DETECT BEZEL/FRAME EDGES (photos of screens show device bezels)
-      const bezelScore = detectBezelEdges(pixels, canvas.width, canvas.height);
-      if (bezelScore > 0.4) {
+      if (moireScore > 0.7) {
         suspicionScore += 40;
-        reasons.push('Device bezel/frame detected');
-      }
-      
-      // 1️⃣3️⃣ CHECK FOR SCREEN GLARE (screen photos have specular highlights)
-      const glareScore = detectScreenGlare(pixels, canvas.width, canvas.height);
-      if (glareScore > 0.35) {
-        suspicionScore += 35;
-        reasons.push('Screen glare pattern detected');
-      }
-      
-      // 1️⃣4️⃣ ANALYZE CHROMATIC ABERRATION (real cameras have lens aberration, screens don't)
-      const aberrationScore = analyzeChromaticAberration(pixels, canvas.width, canvas.height);
-      if (aberrationScore < 0.1) {
-        suspicionScore += 25;
-        reasons.push('Missing camera lens aberration');
-      }
-      
-      // 1️⃣5️⃣ DETECT ASPECT RATIO ANOMALIES (screen photos have exact device ratios)
-      const aspectScore = detectAspectRatioAnomaly(canvas.width, canvas.height);
-      if (aspectScore > 0.5) {
+        reasons.push('Screen moiré pattern detected');
+      } else if (moireScore > 0.5) {
         suspicionScore += 20;
-        reasons.push('Suspicious aspect ratio detected');
+        reasons.push('Possible screen photo');
       }
       
-      console.log('🔍 ULTRA-ELITE VALIDATION RESULTS:');
+      // 2️⃣ AI ARTIFACTS (unnatural smoothness)
+      const aiScore = detectAIArtifacts(pixels, canvas.width, canvas.height);
+      if (aiScore > 0.75) {
+        suspicionScore += 40;
+        reasons.push('AI generation artifacts detected');
+      } else if (aiScore > 0.6) {
+        suspicionScore += 15;
+        reasons.push('Unusual smoothness patterns');
+      }
+      
+      // 3️⃣ SCREEN BEZELS (device borders)
+      const bezelScore = detectScreenBezel(pixels, canvas.width, canvas.height);
+      if (bezelScore > 0.8) {
+        suspicionScore += 30;
+        reasons.push('Screen bezel detected');
+      }
+      
+      // 4️⃣ PIXEL GRID (screen subpixels)
+      const pixelGridScore = detectPixelGrid(pixels, canvas.width, canvas.height);
+      if (pixelGridScore > 0.7) {
+        suspicionScore += 35;
+        reasons.push('Digital display pixel grid detected');
+      }
+      
+      console.log('🔍 PRACTICAL VALIDATION RESULTS:');
       console.log('   Suspicion Score:', suspicionScore);
-      console.log('   Total Checks:', 15);
       console.log('   Failed Checks:', reasons.length);
       console.log('   Reasons:', reasons);
       
-      // 🔥 STRICT THRESHOLD: Reject if suspicion >= 50
-      const isAuthentic = suspicionScore < 50;
+      // ✅ LENIENT THRESHOLD: Allow unless suspicion > 70
+      const isAuthentic = suspicionScore < 70;
       
       resolve({
         isAuthentic,
@@ -151,26 +75,14 @@ const validateImageAuthenticity = async (base64Image) => {
     };
     
     img.onerror = () => {
+      // Fail open - allow image if validation errors
       resolve({
-        isAuthentic: false,
-        suspicionScore: 100,
-        reasons: ['Failed to load image']
+        isAuthentic: true,
+        suspicionScore: 0,
+        reasons: ['Validation check failed - allowing image']
       });
     };
   });
-};
-
-// ===== ORIGINAL 5 DETECTION FUNCTIONS =====
-
-const checkExifData = (base64Image) => {
-  try {
-    const exifMarker = base64Image.indexOf('exif');
-    const hasJfif = base64Image.includes('JFIF') || base64Image.includes('Exif');
-    const hasMake = base64Image.includes('Make') || base64Image.includes('Model');
-    return exifMarker !== -1 || hasJfif || hasMake;
-  } catch (error) {
-    return false;
-  }
 };
 
 const detectMoirePattern = (pixels, width, height) => {
@@ -198,212 +110,41 @@ const detectMoirePattern = (pixels, width, height) => {
   return patternCount / (sampleSize * sampleSize);
 };
 
-const checkPixelUniformity = (pixels) => {
-  let uniformCount = 0;
-  const sampleSize = Math.min(pixels.length / 4, 5000);
-  const step = Math.floor(pixels.length / (sampleSize * 4));
+// Detect AI generation artifacts (unnatural smoothness)
+const detectAIArtifacts = (pixels, width, height) => {
+  let artifactScore = 0;
+  const sampleSize = 100;
   
-  for (let i = 0; i < pixels.length - step * 4; i += step * 4) {
-    const r1 = pixels[i];
-    const g1 = pixels[i + 1];
-    const b1 = pixels[i + 2];
-    const r2 = pixels[i + step * 4];
-    const g2 = pixels[i + step * 4 + 1];
-    const b2 = pixels[i + step * 4 + 2];
+  for (let i = 0; i < sampleSize; i++) {
+    const x = Math.floor(Math.random() * (width - 30));
+    const y = Math.floor(Math.random() * (height - 30));
     
-    const diff = Math.abs(r1 - r2) + Math.abs(g1 - g2) + Math.abs(b1 - b2);
+    const values = [];
     
-    if (diff < 5) {
-      uniformCount++;
-    }
-  }
-  
-  return uniformCount / sampleSize;
-};
-
-const analyzeEdgeSharpness = (pixels, width, height) => {
-  let sharpEdges = 0;
-  let totalEdges = 0;
-  const sampleSize = Math.min(width, height, 150);
-  const step = Math.floor(Math.max(width, height) / sampleSize);
-  
-  for (let y = step; y < height - step; y += step) {
-    for (let x = step; x < width - step; x += step) {
-      const idx = (y * width + x) * 4;
-      const leftIdx = (y * width + (x - step)) * 4;
-      const rightIdx = (y * width + (x + step)) * 4;
-      
-      if (rightIdx < pixels.length) {
-        const leftBrightness = (pixels[leftIdx] + pixels[leftIdx + 1] + pixels[leftIdx + 2]) / 3;
-        const centerBrightness = (pixels[idx] + pixels[idx + 1] + pixels[idx + 2]) / 3;
-        const rightBrightness = (pixels[rightIdx] + pixels[rightIdx + 1] + pixels[rightIdx + 2]) / 3;
-        
-        const gradient = Math.abs(leftBrightness - centerBrightness) + Math.abs(centerBrightness - rightBrightness);
-        
-        if (gradient > 50) {
-          totalEdges++;
-          if (gradient > 150) {
-            sharpEdges++;
-          }
-        }
-      }
-    }
-  }
-  
-  return totalEdges > 0 ? sharpEdges / totalEdges : 0;
-};
-
-const detectSubpixelPattern = (pixels, width) => {
-  let subpixelCount = 0;
-  const samples = Math.min(1000, pixels.length / 4);
-  const step = Math.floor(pixels.length / (samples * 4));
-  
-  for (let i = 0; i < pixels.length - 8; i += step * 4) {
-    const r = pixels[i];
-    const g = pixels[i + 1];
-    const b = pixels[i + 2];
-    
-    const maxChannel = Math.max(r, g, b);
-    const minChannel = Math.min(r, g, b);
-    
-    if (maxChannel - minChannel > 100 && maxChannel > 200) {
-      subpixelCount++;
-    }
-  }
-  
-  return subpixelCount / samples;
-};
-
-// ===== 🔥 NEW ULTRA-ELITE DETECTION FUNCTIONS 🔥 =====
-
-// 6️⃣ Detect screen refresh rate artifacts (60Hz flicker bands)
-const detectRefreshArtifacts = (pixels, width, height) => {
-  let bandingCount = 0;
-  const rowStep = Math.floor(height / 20);
-  
-  for (let y = rowStep; y < height - rowStep; y += rowStep) {
-    let rowBrightness = 0;
-    let prevRowBrightness = 0;
-    
-    for (let x = 0; x < width; x += 10) {
-      const idx = (y * width + x) * 4;
-      const prevIdx = ((y - rowStep) * width + x) * 4;
-      
-      rowBrightness += (pixels[idx] + pixels[idx + 1] + pixels[idx + 2]) / 3;
-      prevRowBrightness += (pixels[prevIdx] + pixels[prevIdx + 1] + pixels[prevIdx + 2]) / 3;
-    }
-    
-    const diff = Math.abs(rowBrightness - prevRowBrightness);
-    
-    // Screens show periodic brightness bands
-    if (diff > 500 && diff < 3000) {
-      bandingCount++;
-    }
-  }
-  
-  return bandingCount / 20;
-};
-
-// 7️⃣ Analyze JPEG compression artifacts (real photos have specific patterns)
-const analyzeCompressionArtifacts = (pixels, width, height) => {
-  let blockArtifacts = 0;
-  const blockSize = 8; // JPEG uses 8x8 blocks
-  const samples = Math.min(50, Math.floor(width / blockSize) * Math.floor(height / blockSize));
-  
-  for (let i = 0; i < samples; i++) {
-    const x = Math.floor(Math.random() * (width - blockSize));
-    const y = Math.floor(Math.random() * (height - blockSize));
-    
-    let blockVariance = 0;
-    
-    for (let by = 0; by < blockSize; by++) {
-      for (let bx = 0; bx < blockSize; bx++) {
-        const idx = ((y + by) * width + (x + bx)) * 4;
-        const nextIdx = ((y + by) * width + (x + bx + 1)) * 4;
-        
-        if (nextIdx < pixels.length) {
-          const diff = Math.abs(pixels[idx] - pixels[nextIdx]);
-          blockVariance += diff;
-        }
+    for (let dy = 0; dy < 30; dy += 3) {
+      for (let dx = 0; dx < 30; dx += 3) {
+        const idx = ((y + dy) * width + (x + dx)) * 4;
+        const brightness = (pixels[idx] + pixels[idx + 1] + pixels[idx + 2]) / 3;
+        values.push(brightness);
       }
     }
     
-    // Real photos have moderate block variance
-    if (blockVariance > 100 && blockVariance < 500) {
-      blockArtifacts++;
-    }
-  }
-  
-  return blockArtifacts / samples;
-};
-
-// 8️⃣ Analyze color histogram (screenshots have spiky distributions)
-const analyzeColorHistogram = (pixels) => {
-  const histogram = new Array(256).fill(0);
-  const sampleSize = Math.min(pixels.length / 4, 10000);
-  const step = Math.floor(pixels.length / (sampleSize * 4));
-  
-  for (let i = 0; i < pixels.length; i += step * 4) {
-    const brightness = Math.floor((pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3);
-    histogram[brightness]++;
-  }
-  
-  // Calculate histogram spikiness
-  let peaks = 0;
-  for (let i = 2; i < 254; i++) {
-    if (histogram[i] > histogram[i - 1] * 2 && histogram[i] > histogram[i + 1] * 2) {
-      peaks++;
-    }
-  }
-  
-  // Screenshots have more peaks (specific colors)
-  return peaks / 256;
-};
-
-// 9️⃣ Detect backlight bleed (screens have uneven illumination)
-const detectBacklightBleed = (pixels, width, height) => {
-  const corners = [
-    { x: 0, y: 0 }, // Top-left
-    { x: width - 50, y: 0 }, // Top-right
-    { x: 0, y: height - 50 }, // Bottom-left
-    { x: width - 50, y: height - 50 } // Bottom-right
-  ];
-  
-  const center = { x: Math.floor(width / 2), y: Math.floor(height / 2) };
-  
-  let brightnessVariance = 0;
-  let centerBrightness = 0;
-  
-  // Calculate center brightness
-  for (let dy = -25; dy < 25; dy++) {
-    for (let dx = -25; dx < 25; dx++) {
-      const idx = ((center.y + dy) * width + (center.x + dx)) * 4;
-      centerBrightness += (pixels[idx] + pixels[idx + 1] + pixels[idx + 2]) / 3;
-    }
-  }
-  centerBrightness /= (50 * 50);
-  
-  // Compare corners to center
-  corners.forEach(corner => {
-    let cornerBrightness = 0;
+    // Calculate variance
+    const mean = values.reduce((a, b) => a + b, 0) / values.length;
+    const variance = values.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / values.length;
     
-    for (let dy = 0; dy < 50; dy++) {
-      for (let dx = 0; dx < 50; dx++) {
-        const idx = ((corner.y + dy) * width + (corner.x + dx)) * 4;
-        if (idx < pixels.length) {
-          cornerBrightness += (pixels[idx] + pixels[idx + 1] + pixels[idx + 2]) / 3;
-        }
-      }
-    }
-    cornerBrightness /= (50 * 50);
+    // Very low variance = suspiciously smooth (AI)
+    if (variance < 50) artifactScore += 0.5;
     
-    // Screens often have brighter corners
-    if (cornerBrightness > centerBrightness * 1.15) {
-      brightnessVariance += 0.25;
+    // Check for unnatural color consistency
+    let colorConsistency = 0;
+    for (let j = 0; j < values.length - 1; j++) {
+      if (Math.abs(values[j] - values[j + 1]) < 2) colorConsistency++;
     }
-  });
+    if (colorConsistency / values.length > 0.7) artifactScore += 0.5;
+  }
   
-  return brightnessVariance;
+  return Math.min(artifactScore / sampleSize, 1);
 };
 
 // 🔟 Detect pixel grid patterns (screens have regular pixel structures)
@@ -431,31 +172,9 @@ const detectPixelGrid = (pixels, width, height) => {
   return gridPattern / samples;
 };
 
-// 1️⃣1️⃣ Analyze noise patterns (real cameras have sensor noise)
-const analyzeNoisePattern = (pixels) => {
-  let noiseVariance = 0;
-  const samples = Math.min(1000, pixels.length / 4);
-  const step = Math.floor(pixels.length / (samples * 4));
-  
-  for (let i = 0; i < pixels.length - step * 8; i += step * 4) {
-    const r1 = pixels[i];
-    const r2 = pixels[i + step * 4];
-    const r3 = pixels[i + step * 8];
-    
-    // Real cameras have random noise
-    const var1 = Math.abs(r1 - r2);
-    const var2 = Math.abs(r2 - r3);
-    
-    if (var1 !== var2 && (var1 > 0 || var2 > 0)) {
-      noiseVariance++;
-    }
-  }
-  
-  return noiseVariance / samples;
-};
 
 // 1️⃣2️⃣ Detect bezel/frame edges (photos of screens show device borders)
-const detectBezelEdges = (pixels, width, height) => {
+const detectScreenBezel = (pixels, width, height) => {
   let bezelDetection = 0;
   const edgeThickness = 20;
   
@@ -518,98 +237,6 @@ const detectBezelEdges = (pixels, width, height) => {
   });
   
   return bezelDetection;
-};
-
-// 1️⃣3️⃣ Detect screen glare (specular highlights from screen surface)
-const detectScreenGlare = (pixels, width, height) => {
-  let glareCount = 0;
-  const samples = Math.min(500, width * height / 2000);
-  
-  for (let i = 0; i < samples; i++) {
-    const x = Math.floor(Math.random() * (width - 20));
-    const y = Math.floor(Math.random() * (height - 20));
-    
-    // Check for bright spot with gradual falloff (specular highlight)
-    const centerIdx = (y * width + x) * 4;
-    const centerBrightness = (pixels[centerIdx] + pixels[centerIdx + 1] + pixels[centerIdx + 2]) / 3;
-    
-    if (centerBrightness > 200) {
-      let surroundBrightness = 0;
-      let surroundSamples = 0;
-      
-      for (let dy = -10; dy <= 10; dy += 5) {
-        for (let dx = -10; dx <= 10; dx += 5) {
-          if (dx === 0 && dy === 0) continue;
-          
-          const idx = ((y + dy) * width + (x + dx)) * 4;
-          if (idx < pixels.length) {
-            surroundBrightness += (pixels[idx] + pixels[idx + 1] + pixels[idx + 2]) / 3;
-            surroundSamples++;
-          }
-        }
-      }
-      
-      surroundBrightness /= surroundSamples;
-      
-      // Screen glare has bright center with gradual falloff
-      if (centerBrightness > surroundBrightness * 1.3) {
-        glareCount++;
-      }
-    }
-  }
-  
-  return glareCount / samples;
-};
-
-// 1️⃣4️⃣ Analyze chromatic aberration (real lenses have color fringing)
-const analyzeChromaticAberration = (pixels, width, height) => {
-  let aberrationCount = 0;
-  const samples = Math.min(200, Math.floor(width * height / 5000));
-  
-  for (let i = 0; i < samples; i++) {
-    const x = Math.floor(Math.random() * (width - 2));
-    const y = Math.floor(Math.random() * (height - 2));
-    
-    const idx = (y * width + x) * 4;
-    const nextIdx = (y * width + (x + 1)) * 4;
-    
-    // Look for color channel misalignment at edges
-    const rDiff = Math.abs(pixels[idx] - pixels[nextIdx]);
-    const bDiff = Math.abs(pixels[idx + 2] - pixels[nextIdx + 2]);
-    
-    // Real lenses have slight RGB misalignment
-    if ((rDiff > 20 || bDiff > 20) && Math.abs(rDiff - bDiff) > 5) {
-      aberrationCount++;
-    }
-  }
-  
-  return aberrationCount / samples;
-};
-
-// 1️⃣5️⃣ Detect suspicious aspect ratios (exact screen dimensions)
-const detectAspectRatioAnomaly = (width, height) => {
-  const aspectRatio = width / height;
-  
-  // Common screen aspect ratios (suspicious)
-  const screenRatios = [
-    { ratio: 16/9, tolerance: 0.01 },     // 1920x1080, 2560x1440
-    { ratio: 16/10, tolerance: 0.01 },    // 1920x1200
-    { ratio: 4/3, tolerance: 0.01 },      // 1024x768
-    { ratio: 21/9, tolerance: 0.01 },     // Ultrawide
-    { ratio: 19.5/9, tolerance: 0.01 },   // iPhone X+
-    { ratio: 9/16, tolerance: 0.01 },     // Portrait phone
-    { ratio: 3/2, tolerance: 0.01 }       // Surface devices
-  ];
-  
-  // Check if matches common screen ratios exactly
-  for (const screen of screenRatios) {
-    if (Math.abs(aspectRatio - screen.ratio) < screen.tolerance) {
-      return 1.0; // Exact match = suspicious
-    }
-  }
-  
-  // Camera photos have irregular ratios
-  return 0.0;
 };
 
 // 🔥🔥🔥 REPLACE YOUR showRejectionAnimation FUNCTION WITH THIS EPIC VERSION! 🔥🔥🔥

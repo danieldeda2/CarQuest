@@ -118,10 +118,10 @@ const About = () => {
   };
 
   const features = [
-    { icon: '📸', title: 'CAPTURE', color: '#a62efb' },
-    { icon: '🤖', title: 'AI PROCESS', color: '#3b82f6' },
-    { icon: '🏆', title: 'COLLECT', color: '#fbbf24' },
-    { icon: '🎯', title: 'DAILY QUESTS', color: '#ef4444' }
+    { icon: '📸', title: '1. Capture Image', color: '#ddeecc' },
+    { icon: '🤖', title: '2. A.I. Verifies', color: '#328fda' },
+    { icon: '🏆', title: '3. Collect Points', color: '#fbbf24' },
+    { icon: '🎯', title: '4. Daily Quests', color: '#34fb22' }
   ];
 
   return (

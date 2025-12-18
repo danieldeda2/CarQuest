@@ -25,47 +25,53 @@ const validateImageAuthenticity = async (base64Image) => {
       let suspicionScore = 0;
       const reasons = [];
       
-      // 1️⃣ DETECT MOIRÉ PATTERNS (photos of screens show interference)
+      // 1️⃣ DETECT MOIRÉ PATTERNS (photos of screens show interference) - BALANCED
       const moireScore = detectMoirePattern(pixels, canvas.width, canvas.height);
-      if (moireScore > 0.7) {
-        suspicionScore += 40;
+      if (moireScore > 0.55) {
+        suspicionScore += 42;
         reasons.push('Screen moiré pattern detected');
-      } else if (moireScore > 0.5) {
-        suspicionScore += 20;
+      } else if (moireScore > 0.4) {
+        suspicionScore += 22;
         reasons.push('Possible screen photo');
       }
       
-      // 2️⃣ AI ARTIFACTS (unnatural smoothness)
+      // 2️⃣ AI ARTIFACTS (unnatural smoothness) - BALANCED
       const aiScore = detectAIArtifacts(pixels, canvas.width, canvas.height);
-      if (aiScore > 0.75) {
-        suspicionScore += 40;
+      if (aiScore > 0.68) {
+        suspicionScore += 42;
         reasons.push('AI generation artifacts detected');
-      } else if (aiScore > 0.6) {
-        suspicionScore += 15;
+      } else if (aiScore > 0.52) {
+        suspicionScore += 18;
         reasons.push('Unusual smoothness patterns');
       }
       
-      // 3️⃣ SCREEN BEZELS (device borders)
+      // 3️⃣ SCREEN BEZELS (device borders) - BALANCED
       const bezelScore = detectScreenBezel(pixels, canvas.width, canvas.height);
-      if (bezelScore > 0.8) {
-        suspicionScore += 30;
+      if (bezelScore > 0.65) {
+        suspicionScore += 38;
         reasons.push('Screen bezel detected');
+      } else if (bezelScore > 0.48) {
+        suspicionScore += 18;
+        reasons.push('Possible device border detected');
       }
       
-      // 4️⃣ PIXEL GRID (screen subpixels)
+      // 4️⃣ PIXEL GRID (screen subpixels) - BALANCED
       const pixelGridScore = detectPixelGrid(pixels, canvas.width, canvas.height);
-      if (pixelGridScore > 0.7) {
-        suspicionScore += 35;
+      if (pixelGridScore > 0.6) {
+        suspicionScore += 38;
         reasons.push('Digital display pixel grid detected');
+      } else if (pixelGridScore > 0.45) {
+        suspicionScore += 18;
+        reasons.push('Possible screen pixel structure');
       }
       
-      console.log('🔍 PRACTICAL VALIDATION RESULTS:');
+      console.log('🔍 BALANCED VALIDATION RESULTS:');
       console.log('   Suspicion Score:', suspicionScore);
       console.log('   Failed Checks:', reasons.length);
       console.log('   Reasons:', reasons);
       
-      // ✅ LENIENT THRESHOLD: Allow unless suspicion > 70
-      const isAuthentic = suspicionScore < 70;
+      // ✅ BALANCED THRESHOLD: Block if suspicion > 65
+      const isAuthentic = suspicionScore < 65;
       
       resolve({
         isAuthentic,
@@ -239,7 +245,6 @@ const detectScreenBezel = (pixels, width, height) => {
   return bezelDetection;
 };
 
-// 🔥🔥🔥 REPLACE YOUR showRejectionAnimation FUNCTION WITH THIS EPIC VERSION! 🔥🔥🔥
 
 const showRejectionAnimation = (reasons, suspicionScore) => {
   const overlay = document.createElement('div');
@@ -866,7 +871,6 @@ const Capture = () => {
         return;
       }
       
-      // 🔥 VALIDATE IMAGE AUTHENTICITY 🔥
       console.log('🔍 Validating image authenticity...');
       const validation = await validateImageAuthenticity(imageData);
       
@@ -888,7 +892,6 @@ const Capture = () => {
   }
 };
 
-  // 🔥🔥🔥 UPDATED handleSubmit WITH 65% CONFIDENCE THRESHOLD! 🔥🔥🔥
   const handleSubmit = async () => {
     setIsProcessing(true);
     
@@ -934,15 +937,14 @@ const Capture = () => {
       const result = await apiResponse.json();
       console.log('13. RESULT:', result);
       
-      // 🔥🔥🔥 CONFIDENCE THRESHOLD CHECK - 65%! 🔥🔥🔥
       if (result.success) {
         const carFullName = result.result;
         const confidence = result.confidence || 0; // Get confidence from API
         
         console.log(`🚗 Detected: ${carFullName} (Confidence: ${(confidence * 100).toFixed(1)}%)`);
         
-        // 🔥 CHECK IF CONFIDENCE IS ABOVE 50%
-        if (confidence < 0.50) {
+        // 🔥 CHECK IF CONFIDENCE IS ABOVE 30%
+        if (confidence < 0.30) {
           console.log(`⚠️ Low confidence (${(confidence * 100).toFixed(1)}%) - Skipping this attempt`);
           
           // Show notification
@@ -954,26 +956,11 @@ const Capture = () => {
             3000
           );
           
-          setCapturedImages([...capturedImages, capturedImage]);
-          
-          // Try next angle if attempts remaining
-          if (attemptNumber < 3) {
-            setIsProcessing(false);
-            setAttemptNumber(attemptNumber + 1);
-            setCapturedImage(null);
-            // DON'T call showAngleInstructions() - already showing notification above!
-          } else {
-            // All attempts used - manual selection
-            console.log('❌ All attempts failed (low confidence)');
-            setIsProcessing(false);
-            setShowManualSelection(true);
-          }
-          
           return; // Exit early - don't show recognition result
         }
         
-        // ✅ CONFIDENCE IS ABOVE 50% - PROCEED AS NORMAL
-        console.log(`✅ High confidence (${(confidence * 100).toFixed(1)}%) - Showing result`);
+        // IF CONFIDENCE IS ABOVE 30% - PROCEED AS NORMAL
+        console.log(`✅ Acceptable confidence (${(confidence * 100).toFixed(1)}%) - Showing result`);
         
         const matchedCar = findCarInDatabase(carFullName);
         
@@ -1095,7 +1082,6 @@ const Capture = () => {
     return null;
   };
 
-  // 🔄 Show epic angle instructions
   const showAngleInstructions = () => {
     const messages = {
       1: {
@@ -1166,7 +1152,6 @@ const handleConfirmYes = async () => {
       return;
     }
 
-    // 🔥 CHECK IF HIGH-VALUE CAR (5000+ points = Mandatory Review)
     const isMandatoryReview = carInfo.points >= 5000;
     
     if (isMandatoryReview) {
@@ -1226,7 +1211,6 @@ const handleConfirmYes = async () => {
       return;
     }
 
-    // 🎯 REGULAR CAR (< 5000 points) - Add directly to collection
     console.log(`✅ Regular car (${carInfo.points} points) - Adding to collection`);
 
     const collectResponse = await fetch(`${BACKEND_API_URL}/collect_car`, {
@@ -1977,30 +1961,240 @@ const handleConfirmYes = async () => {
           </div>
         )}
 
-        {/* 🎯 ML Model Accuracy Disclaimer */}
-        <div className="ml-disclaimer_capture" style={{
-          marginTop: '20px',
-          padding: '15px 20px',
-          background: 'rgba(0, 0, 0, 0.4)',
-          backdropFilter: 'blur(10px)',
-          borderRadius: '15px',
-          border: '2px solid rgba(166, 46, 251, 0.3)',
+
+        <div style={{
+          flexShrink: 0,
+          marginTop: '15px',
+          marginBottom: '30px',
+          padding: '18px 20px',
+          background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(59, 130, 246, 0.15))',
+          backdropFilter: 'blur(15px)',
+          borderRadius: '16px',
+          border: '2px solid rgba(139, 92, 246, 0.4)',
+          boxShadow: '0 8px 32px rgba(139, 92, 246, 0.3), inset 0 0 20px rgba(139, 92, 246, 0.1)',
           maxWidth: '500px',
-          width: '90%'
+          width: 'calc(100% - 40px)',
+          position: 'relative',
+          overflow: 'visible',
+          boxSizing: 'border-box'
         }}>
+          {/* Corner accents - Small and responsive */}
           <div style={{
-            color: 'rgba(255, 255, 255, 0.9)',
-            fontSize: '12px',
-            lineHeight: '1.5',
-            textAlign: 'center'
+            position: 'absolute',
+            top: '6px',
+            left: '6px',
+            width: '22px',
+            height: '22px',
+            border: '2px solid rgba(139, 92, 246, 0.6)',
+            borderRight: 'none',
+            borderBottom: 'none',
+            borderRadius: '3px 0 0 0'
+          }}></div>
+          <div style={{
+            position: 'absolute',
+            top: '6px',
+            right: '6px',
+            width: '22px',
+            height: '22px',
+            border: '2px solid rgba(139, 92, 246, 0.6)',
+            borderLeft: 'none',
+            borderBottom: 'none',
+            borderRadius: '0 3px 0 0'
+          }}></div>
+          <div style={{
+            position: 'absolute',
+            bottom: '6px',
+            left: '6px',
+            width: '22px',
+            height: '22px',
+            border: '2px solid rgba(139, 92, 246, 0.6)',
+            borderRight: 'none',
+            borderTop: 'none',
+            borderRadius: '0 0 0 3px'
+          }}></div>
+          <div style={{
+            position: 'absolute',
+            bottom: '6px',
+            right: '6px',
+            width: '22px',
+            height: '22px',
+            border: '2px solid rgba(139, 92, 246, 0.6)',
+            borderLeft: 'none',
+            borderTop: 'none',
+            borderRadius: '0 0 3px 0'
+          }}></div>
+          
+          {/* Content wrapper */}
+          <div style={{
+            position: 'relative',
+            zIndex: 1,
+            width: '100%'
           }}>
-            <span style={{ fontWeight: '700', color: '#fbbf24' }}>⚡ ML Model - 50% Confidence Threshold</span>
-            <br/>
-            We try from 3 angles (front, alternate, rear) and only show results when ≥50% confident. 
-            Your submissions help us improve! 🚀🚀
-          </div>
-        </div>
+            {/* Title - Compact */}
+            <div style={{
+              fontSize: '14px',
+              fontWeight: '900',
+              letterSpacing: '1px',
+              textTransform: 'uppercase',
+              background: 'linear-gradient(90deg, #8b5cf6, #3b82f6, #8b5cf6)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundSize: '200% auto',
+              animation: 'shimmer 3s linear infinite',
+              marginBottom: '10px',
+              textAlign: 'center',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '6px',
+              lineHeight: '1.2',
+              flexWrap: 'wrap'
+            }}>
+              <span style={{ 
+                fontSize: '18px',
+                filter: 'drop-shadow(0 0 8px rgba(139, 92, 246, 0.8))'
+              }}>⚡</span>
+              AI MODEL STATUS
+              <span style={{ 
+                fontSize: '18px',
+                filter: 'drop-shadow(0 0 8px rgba(139, 92, 246, 0.8))'
+              }}>⚡</span>
+            </div>
+
+            {/* Stats bar - Compact */}
+            <div style={{
+              background: 'rgba(0, 0, 0, 0.3)',
+              borderRadius: '10px',
+              padding: '10px 14px',
+              marginBottom: '12px',
+              border: '1px solid rgba(139, 92, 246, 0.3)'
+            }}>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: '7px',
+                gap: '10px'
+              }}>
+                <span style={{
+                  color: 'rgba(255, 255, 255, 0.7)',
+                  fontSize: '10px',
+                  fontWeight: '700',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px'
+                }}>Accuracy</span>
+                <span style={{
+                  color: '#fbbf24',
+                  fontSize: '17px',
+                  fontWeight: '900',
+                  textShadow: '0 0 10px rgba(251, 191, 36, 0.6)',
+                  letterSpacing: '0.5px'
+                }}>50%</span>
+              </div>
+              
+              {/* Progress bar */}
+              <div style={{
+                width: '100%',
+                height: '7px',
+                background: 'rgba(0, 0, 0, 0.4)',
+                borderRadius: '4px',
+                overflow: 'hidden',
+                position: 'relative',
+                border: '1px solid rgba(139, 92, 246, 0.2)'
+              }}>
+                <div style={{
+                  width: '50%',
+                  height: '100%',
+                  background: 'linear-gradient(90deg, #fbbf24, #f59e0b)',
+                  boxShadow: '0 0 15px rgba(251, 191, 36, 0.6)',
+                  borderRadius: '4px',
+                  position: 'relative',
+                  overflow: 'hidden'
+                }}>
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)',
+                    animation: 'shimmer 2s linear infinite'
+                  }}></div>
+                </div>
+              </div>
+            </div>
+
+            {/* Main message - Compact and clear */}
+            <div style={{
+              color: 'rgba(255, 255, 255, 0.95)',
+              fontSize: '12px',
+              lineHeight: '1.5',
+              textAlign: 'center',
+              fontWeight: '500',
+              textShadow: '0 2px 4px rgba(0, 0, 0, 0.5)'
+            }}>
+              <div style={{ 
+                marginBottom: '8px'
+              }}>
+                We ask for <strong style={{ 
+                  color: '#8b5cf6'
+                }}>3 different angles</strong> to maximize detection chances.
+              </div>
+              
+              {/* Message box */}
+              <div style={{
+                background: 'rgba(139, 92, 246, 0.15)',
+                padding: '10px 12px',
+                borderRadius: '10px',
+                border: '1px solid rgba(139, 92, 246, 0.3)',
+                marginTop: '10px'
+              }}>
+                <div style={{
+                  marginBottom: '5px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '6px',
+                  flexWrap: 'wrap'
+                }}>
+                  <span style={{ 
+                    fontSize: '15px'
+                  }}>🚀</span>
+                  <strong>Your submissions help train our AI!</strong>
+                </div>
+                <div style={{ 
+                  fontSize: '11px', 
+                  opacity: 0.85,
+                  lineHeight: '1.4'
+                }}>
+                  Every capture fine-tunes the model toward 100% accuracy.
+                </div>
+              </div>
+            </div>
+
+            {/* Version badge */}
+            <div style={{
+              marginTop: '10px',
+              textAlign: 'center',
+              fontSize: '9px',
+              color: 'rgba(255, 255, 255, 0.5)',
+              fontWeight: '700',
+              letterSpacing: '0.5px',
+              textTransform: 'uppercase',
+              lineHeight: '1.3'
+            }}>
+              Model v1.0 • Training Active
+            </div>
       </div>
+    </div>
+
+    <style>{`
+      @keyframes shimmer {
+        0% { background-position: 200% center; }
+        100% { background-position: -200% center; }
+      }
+    `}</style>
+          </div>
     </div>
   )
 }

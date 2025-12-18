@@ -403,14 +403,11 @@ const Support = () => {
     const templateParams = {
       from_name: userData?.username || 'Unknown User',
       from_email: userData?.email || 'no-email@example.com',
-      user_points: userData?.points || 0,
-      user_country: userData?.country || 'Unknown',
       message: message,
-      timestamp: new Date().toLocaleString(),
     };
 
     const SERVICE_ID = 'service_s4f5fej';
-    const TEMPLATE_ID = 'template_xuc2den';
+    const TEMPLATE_ID = 'template_7iifdhb';
     const PUBLIC_KEY = 'oeVJDIa1RWNGsjA2P';
 
     emailjs.send(

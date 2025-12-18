@@ -2089,7 +2089,7 @@ const handleConfirmYes = async () => {
                   fontWeight: '900',
                   textShadow: '0 0 10px rgba(251, 191, 36, 0.6)',
                   letterSpacing: '0.5px'
-                }}>50%</span>
+                }}>51.54%</span>
               </div>
               
               {/* Progress bar */}
@@ -2167,7 +2167,8 @@ const handleConfirmYes = async () => {
                   opacity: 0.85,
                   lineHeight: '1.4'
                 }}>
-                  Every capture fine-tunes the model toward 100% accuracy.
+                  Every capture fine-tunes the model towards 100% accuracy. <br/>Note: Model accuracy updated every week.
+                   
                 </div>
               </div>
             </div>

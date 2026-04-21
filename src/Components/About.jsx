@@ -339,12 +339,12 @@ const About = () => {
             </div>
             <div className="stat-divider_about"></div>
             <div className="stat-item_about">
-              <div className="stat-number_about">237</div>
+              <div className="stat-number_about">235</div>
               <div className="stat-label_about">Car Models</div>
             </div>
             <div className="stat-divider_about"></div>
             <div className="stat-item_about">
-              <div className="stat-number_about">&lt;2s</div>
+              <div className="stat-number_about">&lt;1s</div>
               <div className="stat-label_about">Recognition Time</div>
             </div>
           </div>

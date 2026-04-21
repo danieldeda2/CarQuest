@@ -2103,7 +2103,7 @@ const handleConfirmYes = async () => {
                 border: '1px solid rgba(139, 92, 246, 0.2)'
               }}>
                 <div style={{
-                  width: '50%',
+                  width: '90%',
                   height: '100%',
                   background: 'linear-gradient(90deg, #fbbf24, #f59e0b)',
                   boxShadow: '0 0 15px rgba(251, 191, 36, 0.6)',

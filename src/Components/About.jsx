@@ -334,7 +334,7 @@ const About = () => {
           {/* ML Stats */}
           <div className="ml-stats_about">
             <div className="stat-item_about">
-              <div className="stat-number_about">51.54%</div>
+              <div className="stat-number_about">89%</div>
               <div className="stat-label_about">Model Accuracy</div>
             </div>
             <div className="stat-divider_about"></div>

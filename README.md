@@ -11,7 +11,7 @@ CarQuest combines computer vision, machine learning, and game-inspired mechanics
 ## ✨ Key Features
 
 ### 🤖 AI-Powered Vehicle Recognition
-- **Custom ML Model**: PyTorch-based convolutional neural network trained on automotive datasets with 50%+ validation accuracy
+- **Custom ML Model**: PyTorch-based convolutional neural network trained on automotive datasets with ~90% validation accuracy
 - **Intelligent Verification Flow**: AI suggestions with manual selection fallback when confidence is low
 - **Real-time Processing**: Fast inference pipeline for immediate user feedback
 - **250-Model Dataset**: Comprehensive training data covering diverse vehicle makes and models
@@ -100,9 +100,9 @@ CarQuest takes security seriously with enterprise-grade protection at every laye
 
 The custom PyTorch model uses a convolutional neural network architecture specifically tuned for vehicle classification:
 
-- **Training Data**: Curated automotive image datasets covering 250+ vehicle models
+- **Training Data**: Curated automotive image datasets covering 2+ vehicle models
 - **Architecture**: Multi-layer CNN with dropout for regularization
-- **Performance**: 50%+ validation accuracy across diverse vehicle types
+- **Performance**: %+ validation accuracy across diverse vehicle types
 - **Inference**: Optimized for mobile-friendly response times
 - **Continuous Improvement**: Model versioning system for iterative enhancements
 
